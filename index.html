@@ -5,26 +5,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>HTML 5 Boilerplate</title>
-    <link rel="stylesheet" href="style.css" />
   </head>
-  <button type="button" onclick="handleRequest()">click me</button>
   <body>
+    Token: <input id="token-input" type="text" name="fname" />
+    <button type="button" onclick="handleRequest()">click me</button>
+    <section id="response"></section>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
+
     <script>
       //const FormData = require("form-data");
-      const url =
-        "https://cors-anywhere.herokuapp.com/https://online.moneythumb.com/api/v1.1/getapps";
+      const url = "https://online.moneythumb.com/api/v1.1/getapps";
+      const token = document.getElementById("token-input").value;
       const formData = new FormData();
-      formData.append("token", 1);
-      console.log("hello");
+      formData.append("token", token);
       function handleRequest() {
         axios
           .post(url, formData, {
             headers: {},
           })
           .then(function (response) {
+            console.log(token);
             console.log(response);
-            // do whatever you want if console is [object object] then stringify the response
+            var paragraph = document.getElementById("response");
+            var text = document.createTextNode(`${token} \n ${response}`);
+            paragraph.appendChild(text);
+          })
+          .catch(function (response) {
+            console.log(token);
+            console.log(response);
+            var paragraph = document.getElementById("response");
+            var text = document.createTextNode(`${token} \n ${response}`);
+            paragraph.appendChild(text);
           });
       }
     </script>
